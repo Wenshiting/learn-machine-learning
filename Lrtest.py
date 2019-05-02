@@ -22,10 +22,11 @@ print("\tPrecision: %1.3f" % precision_score(y_test, y_pred, average="micro"))
 print("\tRecall: %1.3f" % recall_score(y_test, y_pred, average="micro"))
 print("\tF1: %1.3f\n" % f1_score(y_test, y_pred, average="micro"))
 
+X_train, X_test, y_train, y_test = train_test_split(iris_X, iris_y, test_size=0.0)
 train_sizes, train_loss, test_loss = learning_curve( clf, X_train, y_train, cv=10,
     train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
-train_loss_mean = -np.mean(train_loss, axis=1)
-test_loss_mean = -np.mean(test_loss, axis=1)
+train_loss_mean = 1-np.mean(train_loss, axis=1)
+test_loss_mean = 1-np.mean(test_loss, axis=1)
 plt.plot(train_sizes, train_loss_mean, 'o-', color="r",
          label="Training")
 plt.plot(train_sizes, test_loss_mean, 'o-', color="g",
