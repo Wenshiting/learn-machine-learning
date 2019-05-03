@@ -1,0 +1,43 @@
+from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
+import pandas as pd
+from pandas import DataFrame
+
+iris = load_iris()
+iris_X = iris.data   #x有4个属性，共有600个样本点
+iris_y = iris.target #y的取值有3个，分别是0,1,2
+
+from sklearn.decomposition import PCA
+pca = PCA(n_components=4)
+pca.fit(iris_X)
+#返回所保留的n个成分各自的方差百分比
+print(pca.explained_variance_ratio_)
+print(pca.explained_variance_)
+
+pca1 = PCA(n_components=2)
+pca1.fit(iris_X)
+print(pca1.explained_variance_ratio_)
+print(pca1.explained_variance_)
+
+print(pca1.explained_variance_ratio_)
+print(pca1.explained_variance_)
+
+X_new = pca1.transform(iris_X)
+df_X = DataFrame(X_new, columns=['x1','x2'])
+df_y = DataFrame(iris_y, columns=['y'])
+df = pd.concat([df_X,df_y],axis=1)
+
+df0 = df[df.y==0]
+df1 = df[df.y==1]
+df2 = df[df.y==2]
+
+plt.scatter(df0.x1, df0.x2, color="r")
+plt.scatter(df1.x1, df1.x2, color="g")
+plt.scatter(df2.x1, df2.x2, color="b")
+
+plt.xlabel("x1")
+plt.ylabel("x2")
+plt.legend(labels = ["y0","y1","y2"],loc="best")
+plt.show()
+# plt.scatter(X_new[:, 0], X_new[:, 1],marker='o')
+# plt.show()
