@@ -1,0 +1,27 @@
+# use this method to plot bar to anlysis problems
+from sklearn.datasets import load_iris
+import pandas as pd
+import matplotlib.pyplot as plt
+from pandas import DataFrame
+import numpy as np
+
+iris = load_iris()
+iris_X = iris.data   #x有4个属性，共有150个样本点
+iris_y = iris.target #y的取值有3个，分别是0,1,2
+
+df_X = DataFrame(iris_X, columns=['x1','x2','x3','x4'])
+df_y = DataFrame(iris_y, columns=['y'])
+df = pd.concat([df_X,df_y],axis=1)
+
+df0 = df[df.y==0]
+df1 = df[df.y==1]
+df2 = df[df.y==2]
+
+name_value=df0.x1.value_counts()
+y=name_value.values
+x=name_value.index
+
+# bar picture
+# x = x.as_matrix()
+plt.bar(x,y,width=0.5)
+plt.show()
